@@ -9,14 +9,12 @@ from db import News, session
 from scraputils import get_news
 from test_bayers import clean
 
-PATHNAME = pathlib.Path().resolve()
-
 
 @route('/news')
 def news_list():
     s = session()
     rows = s.query(News).filter(News.label == None).all()
-    return template(f'{PATHNAME}/news_template.tpl', rows=rows)
+    return template('./news_template.tpl', rows=rows)
 
 
 @route('/add_label/')
@@ -75,7 +73,7 @@ def classify_news():
         news.label = label
     classified_news = sorted(rows, key=lambda news: news.label)
     print('news sorted')
-    return template(f'{PATHNAME}/news_recommendations.tpl',
+    return template('./news_recommendations.tpl',
                     rows=classified_news)
 
 
